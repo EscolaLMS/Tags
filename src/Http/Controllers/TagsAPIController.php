@@ -28,14 +28,16 @@ class TagsAPIController extends EscolaLmsBaseController
     }
 
     /**
+     * Create Tags.
+     * POST|HEAD /tags
+     *
      * @param TagInsertRequest $tagInsertRequest
      * @return \Illuminate\Http\JsonResponse
      */
-    public function create(TagInsertRequest $tagInsertRequest) : JsonResponse
+    public function create(TagInsertRequest $tagInsertRequest): JsonResponse
     {
         $tagDto = new TagDto($tagInsertRequest);
-        $tags = $this->tagService->insert($tagDto);
-        return TagResource::collection($tags)->response();
+        return TagResource::collection($this->tagService->insert($tagDto))->response();
     }
 
     /**
@@ -65,20 +67,38 @@ class TagsAPIController extends EscolaLmsBaseController
      */
     public function show(Tag $tag): JsonResponse
     {
-        if (empty($tag)) {
-            return $this->sendError('Tag not found');
-        }
-        return (new TagResource($tag))->response();
+        return empty($tag) ?
+            $this->sendError('Tag not found') :
+            (new TagResource($tag))->response();
     }
 
     /**
+     * Destroy Tags.
+     * DELETE|HEAD /tags
+     *
      * @param TagRemoveRequest $tagRemoveRequest
      */
     public function destroy(TagRemoveRequest $tagRemoveRequest): JsonResponse
     {
         return $this->tagService->removeTags($tagRemoveRequest->input('tags')) ?
-            response()->json(null, 200) :
+            response()->json(null) :
             response()->json(null, 500);
     }
+
+    /**
+     * Display the unique Tags.
+     * GET|HEAD /tags/unique
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function unique(Request $request): JsonResponse
+    {
+        $tags = $this->tagRepository->unique();
+        return $tags ?
+            response()->json(['data' => $tags]) :
+            response()->json(null, 500);
+    }
+
 }
 

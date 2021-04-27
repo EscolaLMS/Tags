@@ -75,4 +75,18 @@ class TagsApiTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function testTagsUnique() : void
+    {
+        $response = $this->json('GET', '/api/tags/unique');
+        $response->assertStatus(200);
+        $this->assertObjectHasAttribute('data', $response->getData());
+        $temp_array = $key_array = [];
+        foreach($response->getData()->data as $key => $val) {
+            if (!in_array($val->title, $key_array)) {
+                $key_array[$key] = $val->title;
+                $temp_array[$key] = $val;
+            }
+        }
+        $this->assertTrue(count($temp_array) === count($response->getData()->data));
+    }
 }

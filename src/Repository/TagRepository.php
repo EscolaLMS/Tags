@@ -57,4 +57,14 @@ class TagRepository extends BaseRepository implements TagRepositoryContract
     {
         return $this->model->newQuery()->whereIn($column, $payload)->delete();
     }
+
+    /**
+     * Build a query for retrieving unique titles.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function unique(): Collection
+    {
+        return $this->model->select('title')->distinct('title')->get();
+    }
 }
