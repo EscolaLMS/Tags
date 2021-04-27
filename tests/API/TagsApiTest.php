@@ -23,5 +23,13 @@ class TagsApiTest extends TestCase
         $this->assertTrue($response->getData()->data[0]->title === 'test');
     }
 
+    public function testTagsIndex() : void
+    {
+        $response = $this->json('GET', '/api/tags');
+        $this->assertObjectHasAttribute('data', $response->getData());
+        $this->assertIsArray($response->getData()->data);
+        $this->assertObjectHasAttribute('title', $response->getData()->data[0]);
+    }
+
 
 }

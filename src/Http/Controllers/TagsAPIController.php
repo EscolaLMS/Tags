@@ -6,18 +6,24 @@ use EscolaLms\Core\Http\Controllers\EscolaLmsBaseController;
 use EscolaLms\Tags\Dto\TagDto;
 use EscolaLms\Tags\Http\Request\TagInsertRequest;
 use EscolaLms\Tags\Http\Resources\TagResource;
+use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
 use EscolaLms\Tags\Services\Contracts\TagServiceContract;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TagsAPIController extends EscolaLmsBaseController
 {
     private TagServiceContract $tagService;
+    private TagRepositoryContract $tagRepository;
 
     public function __construct(
-        TagServiceContract $tagService
+        TagServiceContract $tagService,
+        TagRepositoryContract $tagRepository
     )
     {
         $this->tagService = $tagService;
+        $this->tagRepository = $tagRepository;
     }
 
     /**
@@ -30,5 +36,24 @@ class TagsAPIController extends EscolaLmsBaseController
         $tags = $this->tagService->insert($tagDto);
         return TagResource::collection($tags)->response();
     }
+
+    /**
+     * Display a listing of the Tag.
+     * GET|HEAD /tags
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function index(Request $request)
+    {
+        $tags = $this->tagRepository->all(
+            $request->except(['skip', 'limit']),
+            $request->get('skip'),
+            $request->get('limit')
+        );
+
+        return TagResource::collection($tags)->response();
+    }
+
 }
 
