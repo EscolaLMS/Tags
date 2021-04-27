@@ -70,7 +70,5 @@ class TagsAPIController extends EscolaLmsBaseController
         }
         return (new TagResource($tag))->response();
     }
-
-
 }
 

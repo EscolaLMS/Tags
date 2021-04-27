@@ -49,5 +49,4 @@ class TagsApiTest extends TestCase
         $this->assertTrue($response->getData()->data->id === $tags[0]->id);
     }
 
-
 }
