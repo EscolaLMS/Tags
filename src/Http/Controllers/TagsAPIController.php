@@ -11,7 +11,6 @@ use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
 use EscolaLms\Tags\Services\Contracts\TagServiceContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class TagsAPIController extends EscolaLmsBaseController
 {
@@ -45,7 +44,7 @@ class TagsAPIController extends EscolaLmsBaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $tags = $this->tagRepository->all(
             $request->except(['skip', 'limit']),
@@ -70,7 +69,5 @@ class TagsAPIController extends EscolaLmsBaseController
         }
         return (new TagResource($tag))->response();
     }
-
-
 }
 
