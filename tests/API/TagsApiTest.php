@@ -31,5 +31,23 @@ class TagsApiTest extends TestCase
         $this->assertObjectHasAttribute('title', $response->getData()->data[0]);
     }
 
+    public function testTagShow() : void
+    {
+        // Set value for test
+        config(['tag_model_map.test' => 'Test']);
+        $response = $this->json('POST', '/api/tags', [
+            'model_type' => 'test',
+            'model_id' => 1,
+            'tags' => [
+                ['title' => 'Bestseller']
+            ]
+        ]);
+        $tags = $response->getData()->data;
+        $response = $this->json('GET', '/api/tags/' . $tags[0]->id);
+        $this->assertObjectHasAttribute('data', $response->getData());
+        $this->assertIsObject($response->getData()->data);
+        $this->assertTrue($response->getData()->data->id === $tags[0]->id);
+    }
+
 
 }

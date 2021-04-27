@@ -6,6 +6,7 @@ use EscolaLms\Core\Http\Controllers\EscolaLmsBaseController;
 use EscolaLms\Tags\Dto\TagDto;
 use EscolaLms\Tags\Http\Request\TagInsertRequest;
 use EscolaLms\Tags\Http\Resources\TagResource;
+use EscolaLms\Tags\Models\Tag;
 use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
 use EscolaLms\Tags\Services\Contracts\TagServiceContract;
 use Illuminate\Http\JsonResponse;
@@ -54,6 +55,22 @@ class TagsAPIController extends EscolaLmsBaseController
 
         return TagResource::collection($tags)->response();
     }
+
+    /**
+     * Display the specified Tag.
+     * GET|HEAD /tags/{tag}
+     *
+     * @param $id
+     * @return JsonResponse
+     */
+    public function show(Tag $tag): JsonResponse
+    {
+        if (empty($tag)) {
+            return $this->sendError('Tag not found');
+        }
+        return (new TagResource($tag))->response();
+    }
+
 
 }
 
