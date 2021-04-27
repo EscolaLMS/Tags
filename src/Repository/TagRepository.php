@@ -40,11 +40,21 @@ class TagRepository extends BaseRepository implements TagRepositoryContract
     }
 
     /**
-     * @param TagDto $tagData
+     * @param array $tagData
      * @return Tag
      */
-    public function insert($tagData) : Tag
+    public function insert(array $tagData) : Tag
     {
         return $this->model->create($tagData);
+    }
+
+    /**
+     * @param string $column
+     * @param array $payload
+     * @return bool|null
+     */
+    public function deleteWhereIn(string $column, array $payload): ?bool
+    {
+        return $this->model->newQuery()->whereIn($column, $payload)->delete();
     }
 }

@@ -49,5 +49,30 @@ class TagsApiTest extends TestCase
         $this->assertTrue($response->getData()->data->id === $tags[0]->id);
     }
 
+    public function testTagDestroy() : void
+    {
+        // Set value for test
+        config(['tag_model_map.test' => 'Test']);
+        $response = $this->json('POST', '/api/tags', [
+            'model_type' => 'test',
+            'model_id' => 1,
+            'tags' => [
+                ['title' => 'Bestseller'],
+                ['title' => 'Nowości'],
+                ['title' => 'Promocje'],
+                ['title' => 'Najlepsze hity'],
+                ['title' => 'Na czasie']
+            ]
+        ]);
+        $tags = $response->getData()->data;
+        $response = $this->json('DELETE', '/api/tags', [
+            'tags' => [
+                array_map(function ($tag) {
+                    return $tag->id;
+                }, $tags)
+            ]
+        ]);
+        $response->assertStatus(200);
+    }
 
 }

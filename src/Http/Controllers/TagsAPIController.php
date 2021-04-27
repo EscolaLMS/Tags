@@ -5,6 +5,7 @@ namespace EscolaLms\Tags\Http\Controllers;
 use EscolaLms\Core\Http\Controllers\EscolaLmsBaseController;
 use EscolaLms\Tags\Dto\TagDto;
 use EscolaLms\Tags\Http\Request\TagInsertRequest;
+use EscolaLms\Tags\Http\Request\TagRemoveRequest;
 use EscolaLms\Tags\Http\Resources\TagResource;
 use EscolaLms\Tags\Models\Tag;
 use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
@@ -68,6 +69,16 @@ class TagsAPIController extends EscolaLmsBaseController
             return $this->sendError('Tag not found');
         }
         return (new TagResource($tag))->response();
+    }
+
+    /**
+     * @param TagRemoveRequest $tagRemoveRequest
+     */
+    public function destroy(TagRemoveRequest $tagRemoveRequest): JsonResponse
+    {
+        return $this->tagService->removeTags($tagRemoveRequest->input('tags')) ?
+            response()->json(null, 200) :
+            response()->json(null, 500);
     }
 }
 

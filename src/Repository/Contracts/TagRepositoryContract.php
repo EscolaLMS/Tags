@@ -9,5 +9,5 @@ use EscolaLms\Tags\Dto\TagDto;
 
 interface TagRepositoryContract extends BaseRepositoryContract
 {
-    public function insert(TagDto $tagDto);
+    public function insert(array $tagDto);
 }
