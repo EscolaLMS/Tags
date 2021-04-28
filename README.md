@@ -5,14 +5,14 @@
 
 ## Features
 
-The lib allows tags 
+The lib allows tags
 
 - adding tags to each module
 - edit and create multiple tags
 
 See [Swagger](https://escolalms.github.io/Tags/) documented endpoints.
 
-Some [tests](tests) can also be a great point of start. 
+Some [tests](tests) can also be a great point of start.
 
 To play the content you can use [EscolaLMS Tags](https://github.com/EscolaLMS/Tags)
 
@@ -33,9 +33,9 @@ location ~* \.(eot|ttf|woff|woff2|jpg|jpeg|gif|png|wav|mp3|mp4|mov|ogg|webv)$ {
 }
 ```
 
-## Road map 
+## Road map
 
-- caching 
-- casading delete 
-- sql foreign keys indexing 
+- caching
+- casading delete
+- sql foreign keys indexing
 - clearup task - deleting temp files, marked for delete 

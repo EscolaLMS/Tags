@@ -12,15 +12,6 @@ class TagPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * @param User $user
-     * @param Tag $tag
-     * @return bool
-     */
-    public function update(User $user, Tag $tag)
-    {
-        return $user->can('update tags');
-    }
 
     /**
      * @param User $user

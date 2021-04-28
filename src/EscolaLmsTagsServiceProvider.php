@@ -23,6 +23,7 @@ class EscolaLmsTagsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->commands([TagsSeedCommand::class]);
+        $this->app->register(\L5Swagger\L5SwaggerServiceProvider::class);
     }
 
     public function boot()
