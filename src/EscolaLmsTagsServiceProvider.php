@@ -26,12 +26,32 @@ class EscolaLmsTagsServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->loadRoutesFrom(__DIR__ . '/routes.php');
+        $this->loadConfig();
+        $this->loadMigrations();
+        $this->app['router']->aliasMiddleware('role', RoleMiddleware::class);
+    }
+
+    private function loadConfig(): void
+    {
+        $this->publishes([
+            __DIR__ . '/tag_model_map.php' => config_path('escolalms/tag_model_map.php'),
+        ], 'config');
+
         $this->mergeConfigFrom(
-            __DIR__.'/../config/tag_model_map.php',
+            __DIR__.'/tag_model_map.php',
             'tag_model_map'
         );
-        $this->loadRoutesFrom(__DIR__ . '/routes.php');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->app['router']->aliasMiddleware('role', RoleMiddleware::class);
+    }
+
+    private function loadMigrations(): void
+    {
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => database_path('migrations')
+        ], 'escolalms');
+
+        if (!config('escolalms.tags.ignore_migrations')) {
+            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        }
     }
 }
