@@ -13,6 +13,9 @@ use EscolaLms\Tags\Services\Contracts\TagServiceContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Info(title="EscolaLMS Tags", version="0.1")
+ */
 class TagsAPIController extends EscolaLmsBaseController
 {
     private TagServiceContract $tagService;
@@ -28,7 +31,7 @@ class TagsAPIController extends EscolaLmsBaseController
     }
 
     /**
-     * Create Tags.
+     * Create multiple Tags.
      * POST|HEAD /tags
      *
      * @param TagInsertRequest $tagInsertRequest
@@ -82,7 +85,7 @@ class TagsAPIController extends EscolaLmsBaseController
     {
         return $this->tagService->removeTags($tagRemoveRequest->input('tags')) ?
             response()->json(null) :
-            response()->json(null, 500);
+            response()->json(null, 422);
     }
 
     /**
@@ -97,7 +100,7 @@ class TagsAPIController extends EscolaLmsBaseController
         $tags = $this->tagRepository->unique();
         return $tags ?
             response()->json(['data' => $tags]) :
-            response()->json(null, 500);
+            response()->json(null, 422);
     }
 
 }
