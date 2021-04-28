@@ -3,6 +3,7 @@
 namespace EscolaLms\Tags;
 
 use EscolaLms\Core\Providers\Injectable;
+use EscolaLms\Tags\Commands\TagsSeedCommand;
 use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
 use EscolaLms\Tags\Repository\TagRepository;
 use EscolaLms\Tags\Services\Contracts\TagServiceContract;
@@ -14,14 +15,14 @@ class EscolaLmsTagsServiceProvider extends ServiceProvider
 {
     use Injectable;
 
-    private const CONTRACTS = [
+    public $singletons = [
         TagRepositoryContract::class => TagRepository::class,
         TagServiceContract::class => TagService::class
     ];
 
     public function register()
     {
-        $this->injectContract(self::CONTRACTS);
+        $this->commands([TagsSeedCommand::class]);
     }
 
     public function boot()

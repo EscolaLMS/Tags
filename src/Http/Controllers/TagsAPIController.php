@@ -65,7 +65,7 @@ class TagsAPIController extends EscolaLmsBaseController
      * @param $id
      * @return JsonResponse
      */
-    public function show(Tag $tag): JsonResponse
+    public function show(Tag $tag, Request $request): JsonResponse
     {
         return empty($tag) ?
             $this->sendError('Tag not found') :

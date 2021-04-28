@@ -2,6 +2,7 @@
 
 namespace EscolaLms\Tags\Http\Request;
 
+use EscolaLms\Tags\Models\Tag;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TagRemoveRequest extends FormRequest
@@ -13,7 +14,7 @@ class TagRemoveRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('create', Tag::class);
     }
 
     /**
