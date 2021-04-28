@@ -5,7 +5,7 @@ namespace EscolaLms\Tags\Http\Request;
 use EscolaLms\Tags\Models\Tag;
 use Illuminate\Foundation\Http\FormRequest;
 
-class TagInsertRequest extends FormRequest
+class TagRemoveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,6 @@ class TagInsertRequest extends FormRequest
     public function rules()
     {
         return [
-            'model_type' => 'required|string',
-            'model_id' => 'required|integer',
             'tags' => 'required|array',
         ];
     }

@@ -2,8 +2,10 @@
 
 namespace EscolaLms\Tags\Services;
 
+use EscolaLms\Tags\Dto\TagDto;
 use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
 use EscolaLms\Tags\Services\Contracts\TagServiceContract;
+use Illuminate\Support\Collection;
 
 class TagService implements TagServiceContract
 {
@@ -16,7 +18,11 @@ class TagService implements TagServiceContract
         $this->tagRepositoryContract = $tagRepositoryContract;
     }
 
-    public function insert($tagDto)
+    /**
+     * @param TagDto $tagDto
+     * @return Collection
+     */
+    public function insert(TagDto $tagDto) : Collection
     {
         $tags = collect();
         foreach ($tagDto->getTags() as $tag) {
@@ -30,5 +36,14 @@ class TagService implements TagServiceContract
             }
         }
         return $tags;
+    }
+
+    /**
+     * @param array $tags
+     * @return bool
+     */
+    public function removeTags(array $tags) : bool
+    {
+        return $this->tagRepositoryContract->deleteWhereIn('id', $tags);
     }
 }
