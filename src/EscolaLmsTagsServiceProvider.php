@@ -11,6 +11,9 @@ use EscolaLms\Tags\Services\TagService;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Middlewares\RoleMiddleware;
 
+/**
+ * SWAGGER_VERSION
+ */
 class EscolaLmsTagsServiceProvider extends ServiceProvider
 {
     use Injectable;
