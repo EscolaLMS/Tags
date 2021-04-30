@@ -1,14 +1,14 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "EscolaLMS Tags",
-        "version": "0.1"
+        "title": "EscolaLMS",
+        "version": "0.0.1"
     },
     "paths": {
         "/api/tags": {
             "get": {
                 "tags": [
-                    "tags"
+                    "Tags"
                 ],
                 "description": "Display a listing of the Tag",
                 "operationId": "EscolaLms\\Tags\\Http\\Controllers\\Swagger\\TagsApiSwagger::index",
@@ -28,6 +28,9 @@
                 }
             },
             "delete": {
+                "tags": [
+                    "Tags"
+                ],
                 "summary": "Destroy Tags",
                 "description": "Destroy Tags",
                 "operationId": "EscolaLms\\Tags\\Http\\Controllers\\Swagger\\TagsApiSwagger::destroy",
@@ -74,7 +77,7 @@
         "/api/tags/unique": {
             "get": {
                 "tags": [
-                    "tags"
+                    "Tags"
                 ],
                 "description": "Display the unique Tags",
                 "operationId": "EscolaLms\\Tags\\Http\\Controllers\\Swagger\\TagsApiSwagger::unique",
@@ -97,7 +100,7 @@
         "/api/tags/create": {
             "post": {
                 "tags": [
-                    "tags"
+                    "Tags"
                 ],
                 "description": "Create multiple Tags",
                 "operationId": "EscolaLms\\Tags\\Http\\Controllers\\Swagger\\TagsApiSwagger::create",
@@ -160,7 +163,7 @@
         "/api/tags/{tag}": {
             "get": {
                 "tags": [
-                    "tags"
+                    "Tags"
                 ],
                 "description": "Display the specified Tag",
                 "operationId": "EscolaLms\\Tags\\Http\\Controllers\\Swagger\\TagsApiSwagger::show",
