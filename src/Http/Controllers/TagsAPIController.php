@@ -13,9 +13,6 @@ use EscolaLms\Tags\Services\Contracts\TagServiceContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-/**
- * @OA\Info(title="EscolaLMS Tags", version="0.1")
- */
 class TagsAPIController extends EscolaLmsBaseController
 {
     private TagServiceContract $tagService;

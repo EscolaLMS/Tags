@@ -12,7 +12,7 @@ interface TagsApiSwagger
 {
     /**
      * @OA\Get(
-     *      tags={"tags"},
+     *      tags={"Tags"},
      *      path="/api/tags",
      *      description="Display a listing of the Tag",
      *      @OA\Response(
@@ -35,7 +35,7 @@ interface TagsApiSwagger
 
     /**
      * @OA\Get(
-     *      tags={"tags"},
+     *      tags={"Tags"},
      *      path="/api/tags/unique",
      *      description="Display the unique Tags",
      *      @OA\Response(
@@ -58,7 +58,7 @@ interface TagsApiSwagger
 
     /**
      * @OA\Post(
-     *      tags={"tags"},
+     *      tags={"Tags"},
      *      path="/api/tags/create",
      *      description="Create multiple Tags",
      *      @OA\RequestBody(
@@ -112,6 +112,7 @@ interface TagsApiSwagger
 
     /**
      * @OA\Delete(
+     *     tags={"Tags"},
      *     path="/api/tags",
      *     summary="Destroy Tags",
      *     description="Destroy Tags",
@@ -150,7 +151,7 @@ interface TagsApiSwagger
 
     /**
      * @OA\Get(
-     *      tags={"tags"},
+     *      tags={"Tags"},
      *      path="/api/tags/{tag}",
      *      description="Display the specified Tag",
      *      @OA\Parameter(
