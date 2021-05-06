@@ -3,7 +3,6 @@
 
 namespace EscolaLms\Tags\Commands;
 
-
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Permission;
 
