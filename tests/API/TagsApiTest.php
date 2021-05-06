@@ -103,11 +103,8 @@ class TagsApiTest extends TestCase
             $tags[$tag->getKey()] = $tag;
         }
         $response = $this->actingAs($user, 'api')->json('DELETE', '/api/tags', [
-            'tags' => [
-                array_keys($tags)
-            ]
+            'tags' => array_keys($tags)
         ]);
-        dd($response);
         $response->assertStatus(200);
     }
 
