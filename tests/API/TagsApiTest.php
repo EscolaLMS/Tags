@@ -108,6 +108,7 @@ class TagsApiTest extends TestCase
                 }, $tags)
             ]
         ]);
+        dd($response);
         $response->assertStatus(200);
     }
 
