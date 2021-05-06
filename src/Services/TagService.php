@@ -44,6 +44,6 @@ class TagService implements TagServiceContract
      */
     public function removeTags(array $tags) : bool
     {
-        return $this->tagRepositoryContract->deleteWhereIn('id', array_values($tags));
+        return $this->tagRepositoryContract->deleteWhereIn('id', $tags);
     }
 }

@@ -98,17 +98,15 @@ class TagsApiTest extends TestCase
                 'morphable_id' => 1
             ]
         ];
-        foreach ($tagsData as $tag) {
-            $tags[] = Tag::create($tag);
+        foreach ($tagsData as $value) {
+            $tag = Tag::create($value);
+            $tags[$tag->getKey()] = $tag;
         }
         $response = $this->actingAs($user, 'api')->json('DELETE', '/api/tags', [
             'tags' => [
-                array_map(function ($tag) {
-                    return $tag->id;
-                }, $tags)
+                array_keys($tags)
             ]
         ]);
-        dd($response);
         $response->assertStatus(200);
     }
 
