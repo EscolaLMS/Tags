@@ -71,39 +71,21 @@ class TagsApiTest extends TestCase
         $user->givePermissionTo('delete tags');
         // Set value for test
         config(['tag_model_map.test' => 'Test']);
-        $tagsData = [
-            [
-                'title' => 'Bestseller',
-                'morphable_type' => 'Test',
-                'morphable_id' => 1
-            ],
-            [
-                'title' => 'Nowości',
-                'morphable_type' => 'Test',
-                'morphable_id' => 1
-            ],
-            [
-                'title' => 'Promocje',
-                'morphable_type' => 'Test',
-                'morphable_id' => 1
-            ],
-            [
-                'title' => 'Najlepsze hity',
-                'morphable_type' => 'Test',
-                'morphable_id' => 1
-            ],
-            [
-                'title' => 'Na czasie',
-                'morphable_type' => 'Test',
-                'morphable_id' => 1
+        $response = $this->actingAs($user, 'api')->json('POST', '/api/tags', [
+            'model_type' => 'test',
+            'model_id' => 1,
+            'tags' => [
+                ['title' => 'Bestseller'],
+                ['title' => 'Nowości'],
+                ['title' => 'Promocje'],
+                ['title' => 'Najlepsze hity'],
+                ['title' => 'Na czasie']
             ]
-        ];
-        foreach ($tagsData as $value) {
-            $tag = Tag::create($value);
-            $tags[$tag->getKey()] = $tag;
-        }
+        ]);
+        $response->assertStatus(200);
+        $tags = $response->getData()->data;
         $response = $this->actingAs($user, 'api')->json('DELETE', '/api/tags', [
-            'tags' => array_keys($tags)
+            'tags' => array_values($tags)
         ]);
         $response->assertStatus(200);
     }
