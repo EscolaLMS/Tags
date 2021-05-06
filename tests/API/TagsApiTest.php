@@ -2,6 +2,7 @@
 
 namespace EscolaLms\Tags\Tests\API;
 
+use EscolaLms\Tags\Models\Tag;
 use EscolaLms\Tags\Tests\TestCase;
 use Illuminate\Support\Facades\Artisan;
 
@@ -81,13 +82,13 @@ class TagsApiTest extends TestCase
                 ['title' => 'Na czasie']
             ]
         ]);
+        $response->assertStatus(200);
         $tags = $response->getData()->data;
         $response = $this->actingAs($user, 'api')->json('DELETE', '/api/tags', [
-            'tags' => [
-                array_map(function ($tag) {
+            'tags' => array_map(function ($tag) {
                     return $tag->id;
                 }, $tags)
-            ]
+
         ]);
         $response->assertStatus(200);
     }
