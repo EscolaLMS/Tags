@@ -33,6 +33,12 @@ location ~* \.(eot|ttf|woff|woff2|jpg|jpeg|gif|png|wav|mp3|mp4|mov|ogg|webv)$ {
 }
 ```
 
+### Seeder
+You can seed library and content with build-in seeders that are accessible with
+
+- `php artisan tag-permissions:seed` to add permissions
+- `php artisan db:seed --class="\EscolaLms\Tags\Database\Seeders\TagsSeeder"` to add fake data
+
 ## Road map
 
 - caching
