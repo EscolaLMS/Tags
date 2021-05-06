@@ -85,7 +85,10 @@ class TagsApiTest extends TestCase
         $response->assertStatus(200);
         $tags = $response->getData()->data;
         $response = $this->actingAs($user, 'api')->json('DELETE', '/api/tags', [
-            'tags' => array_values($tags)
+            'tags' => array_map(function ($tag) {
+                    return $tag->id;
+                }, $tags)
+
         ]);
         $response->assertStatus(200);
     }
