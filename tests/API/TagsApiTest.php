@@ -2,6 +2,7 @@
 
 namespace EscolaLms\Tags\Tests\API;
 
+use EscolaLms\Tags\Models\Tag;
 use EscolaLms\Tags\Tests\TestCase;
 use Illuminate\Support\Facades\Artisan;
 
@@ -70,18 +71,36 @@ class TagsApiTest extends TestCase
         $user->givePermissionTo('delete tags');
         // Set value for test
         config(['tag_model_map.test' => 'Test']);
-        $response = $this->actingAs($user, 'api')->json('POST', '/api/tags', [
-            'model_type' => 'test',
-            'model_id' => 1,
-            'tags' => [
-                ['title' => 'Bestseller'],
-                ['title' => 'Nowości'],
-                ['title' => 'Promocje'],
-                ['title' => 'Najlepsze hity'],
-                ['title' => 'Na czasie']
+        $tagsData = [
+            [
+                'title' => 'Bestseller',
+                'morphable_type' => 'Test',
+                'morphable_id' => 1
+            ],
+            [
+                'title' => 'Nowości',
+                'morphable_type' => 'Test',
+                'morphable_id' => 1
+            ],
+            [
+                'title' => 'Promocje',
+                'morphable_type' => 'Test',
+                'morphable_id' => 1
+            ],
+            [
+                'title' => 'Najlepsze hity',
+                'morphable_type' => 'Test',
+                'morphable_id' => 1
+            ],
+            [
+                'title' => 'Na czasie',
+                'morphable_type' => 'Test',
+                'morphable_id' => 1
             ]
-        ]);
-        $tags = $response->getData()->data;
+        ];
+        foreach ($tagsData as $tag) {
+            $tags[] = Tag::create($tag);
+        }
         $response = $this->actingAs($user, 'api')->json('DELETE', '/api/tags', [
             'tags' => [
                 array_map(function ($tag) {
