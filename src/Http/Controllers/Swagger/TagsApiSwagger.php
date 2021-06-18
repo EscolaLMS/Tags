@@ -113,6 +113,9 @@ interface TagsApiSwagger
     /**
      * @OA\Delete(
      *     tags={"Tags"},
+     *     security={
+     *         {"passport": {}},
+     *     },
      *     path="/api/tags",
      *     summary="Destroy Tags",
      *     description="Destroy Tags",
@@ -152,6 +155,9 @@ interface TagsApiSwagger
     /**
      * @OA\Get(
      *      tags={"Tags"},
+     *      security={
+     *          {"passport": {}},
+     *      },
      *      path="/api/tags/{tag}",
      *      description="Display the specified Tag",
      *      @OA\Parameter(
