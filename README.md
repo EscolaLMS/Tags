@@ -1,7 +1,13 @@
 # Tags
 
+[![swagger](https://img.shields.io/badge/documentation-swagger-green)](https://escolalms.github.io/Tags/)
 [![codecov](https://codecov.io/gh/EscolaLMS/Tags/branch/main/graph/badge.svg?token=ci4VPQbrOI)](https://codecov.io/gh/EscolaLMS/Tags)
-[![phpunit](https://github.com/EscolaLMS/Tags/actions/workflows/test.yml/badge.svg)](https://github.com/EscolaLMS/Core/actions/workflows/test.yml)
+[![phpunit](https://github.com/EscolaLMS/Tags/actions/workflows/test.yml/badge.svg)](https://github.com/EscolaLMS/Tags/actions/workflows/test.yml)
+[![downloads](https://img.shields.io/packagist/dt/escolalms/tags)](https://packagist.org/packages/escolalms/tags)
+[![downloads](https://img.shields.io/packagist/v/escolalms/tags)](https://packagist.org/packages/escolalms/tags)
+[![downloads](https://img.shields.io/packagist/l/escolalms/tags)](https://packagist.org/packages/escolalms/tags)
+
+
 
 ## Features
 
