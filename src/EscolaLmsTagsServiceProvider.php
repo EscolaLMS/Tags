@@ -3,7 +3,6 @@
 namespace EscolaLms\Tags;
 
 use EscolaLms\Core\Providers\Injectable;
-use EscolaLms\Tags\Commands\TagsSeedCommand;
 use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
 use EscolaLms\Tags\Repository\TagRepository;
 use EscolaLms\Tags\Services\Contracts\TagServiceContract;
@@ -25,29 +24,16 @@ class EscolaLmsTagsServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->commands([TagsSeedCommand::class]);
         $this->app->register(\L5Swagger\L5SwaggerServiceProvider::class);
     }
 
     public function boot()
     {
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
-        $this->loadConfig();
         $this->loadMigrations();
         $this->app['router']->aliasMiddleware('role', RoleMiddleware::class);
     }
 
-    private function loadConfig(): void
-    {
-        $this->publishes([
-            __DIR__ . '/tag_model_map.php' => config_path('escolalms/tag_model_map.php'),
-        ], 'config');
-
-        $this->mergeConfigFrom(
-            __DIR__.'/tag_model_map.php',
-            'tag_model_map'
-        );
-    }
 
     private function loadMigrations(): void
     {
@@ -55,8 +41,7 @@ class EscolaLmsTagsServiceProvider extends ServiceProvider
             __DIR__ . '/../database/migrations' => database_path('migrations')
         ], 'escolalms');
 
-        //  if (!config('escolalms.tags.ignore_migrations')) {
-            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        // }
+
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
 }
