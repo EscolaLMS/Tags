@@ -55,8 +55,8 @@ class EscolaLmsTagsServiceProvider extends ServiceProvider
             __DIR__ . '/../database/migrations' => database_path('migrations')
         ], 'escolalms');
 
-        if (!config('escolalms.tags.ignore_migrations')) {
+        //  if (!config('escolalms.tags.ignore_migrations')) {
             $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        }
+        // }
     }
 }
