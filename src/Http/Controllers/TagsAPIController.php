@@ -6,7 +6,6 @@ use EscolaLms\Core\Http\Controllers\EscolaLmsBaseController;
 use EscolaLms\Tags\Dto\TagDto;
 use EscolaLms\Tags\Http\Request\TagInsertRequest;
 use EscolaLms\Tags\Http\Request\TagRemoveRequest;
-use EscolaLms\Tags\Http\Resources\TagResource;
 use EscolaLms\Tags\Models\Tag;
 use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
 use EscolaLms\Tags\Services\Contracts\TagServiceContract;
