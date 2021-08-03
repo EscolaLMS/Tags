@@ -6,12 +6,12 @@ use EscolaLms\Core\Http\Controllers\EscolaLmsBaseController;
 use EscolaLms\Tags\Dto\TagDto;
 use EscolaLms\Tags\Http\Request\TagInsertRequest;
 use EscolaLms\Tags\Http\Request\TagRemoveRequest;
-use EscolaLms\Tags\Http\Resources\TagResource;
 use EscolaLms\Tags\Models\Tag;
 use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
 use EscolaLms\Tags\Services\Contracts\TagServiceContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Exception;
 
 class TagsAPIController extends EscolaLmsBaseController
 {
@@ -21,8 +21,7 @@ class TagsAPIController extends EscolaLmsBaseController
     public function __construct(
         TagServiceContract $tagService,
         TagRepositoryContract $tagRepository
-    )
-    {
+    ) {
         $this->tagService = $tagService;
         $this->tagRepository = $tagRepository;
     }
@@ -37,7 +36,12 @@ class TagsAPIController extends EscolaLmsBaseController
     public function create(TagInsertRequest $tagInsertRequest): JsonResponse
     {
         $tagDto = new TagDto($tagInsertRequest);
-        return TagResource::collection($this->tagService->insert($tagDto))->response();
+        try {
+            $tag = $this->tagService->insert($tagDto);
+        } catch (Exception $error) {
+            return $this->sendError($error->getMessage());
+        }
+        return $this->sendResponse($tag, 'Tag created successfully');
     }
 
     /**
@@ -49,13 +53,16 @@ class TagsAPIController extends EscolaLmsBaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $tags = $this->tagRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
-        );
-
-        return TagResource::collection($tags)->response();
+        try {
+            $tags = $this->tagRepository->all(
+                $request->except(['skip', 'limit']),
+                $request->get('skip'),
+                $request->get('limit')
+            );
+        } catch (Exception $error) {
+            return $this->sendError($error->getMessage());
+        }
+        return $this->sendResponse($tags, 'Tags fetched successfully');
     }
 
     /**
@@ -68,8 +75,8 @@ class TagsAPIController extends EscolaLmsBaseController
     public function show(Tag $tag, Request $request): JsonResponse
     {
         return empty($tag) ?
-            $this->sendError('Tag not found') :
-            (new TagResource($tag))->response();
+            $this->sendError('Tag not found', 404) :
+            $this->sendResponse($tag, 'Tag fetched successfully');
     }
 
     /**
@@ -81,8 +88,7 @@ class TagsAPIController extends EscolaLmsBaseController
     public function destroy(TagRemoveRequest $tagRemoveRequest): JsonResponse
     {
         return $this->tagService->removeTags($tagRemoveRequest->input('tags')) ?
-            response()->json(null) :
-            response()->json(null, 422);
+            $this->sendResponse([], 'Tags deleted successfully') : $this->sendError('Tag not found', 404);
     }
 
     /**
@@ -96,9 +102,7 @@ class TagsAPIController extends EscolaLmsBaseController
     {
         $tags = $this->tagRepository->unique();
         return $tags ?
-            response()->json(['data' => $tags]) :
-            response()->json(null, 422);
+            $this->sendResponse($tags, 'Tags unique fetched successfully') :
+            $this->sendError('Tags not found', 404) ;
     }
-
 }
-
