@@ -23,7 +23,7 @@ class TagsApiTest extends TestCase
     {
    
         // Set value for test
-        $response = $this->actingAs($this->user, 'api')->json('POST', '/api/tags', [
+        $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'test',
             'model_id' => 1,
             'tags' => [
@@ -48,7 +48,7 @@ class TagsApiTest extends TestCase
     {
 
         // Set value for test
-        $response = $this->actingAs($this->user, 'api')->json('POST', '/api/tags', [
+        $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'test',
             'model_id' => 1,
             'tags' => [
@@ -56,7 +56,7 @@ class TagsApiTest extends TestCase
             ]
         ]);
         $tags = $response->getData()->data;
-        $response = $this->json('GET', '/api/tags/' . $tags[0]->id);
+        $response = $this->json('GET', '/api/admin/tags/' . $tags[0]->id);
         $this->assertObjectHasAttribute('data', $response->getData());
         $this->assertIsObject($response->getData()->data);
         $this->assertTrue($response->getData()->data->id === $tags[0]->id);
@@ -64,7 +64,7 @@ class TagsApiTest extends TestCase
 
     public function testTagDestroy() : void
     {
-        $response = $this->actingAs($this->user, 'api')->json('POST', '/api/tags', [
+        $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'test',
             'model_id' => 1,
             'tags' => [
@@ -77,7 +77,7 @@ class TagsApiTest extends TestCase
         ]);
         $response->assertStatus(200);
         $tags = $response->getData()->data;
-        $response = $this->actingAs($this->user, 'api')->json('DELETE', '/api/tags', [
+        $response = $this->actingAs($this->user, 'api')->json('DELETE', '/api/admin/tags', [
             'tags' => array_map(function ($tag) {
                 return $tag->id;
             }, $tags)

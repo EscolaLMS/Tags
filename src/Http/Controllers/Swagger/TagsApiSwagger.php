@@ -59,7 +59,7 @@ interface TagsApiSwagger
     /**
      * @OA\Post(
      *      tags={"Tags"},
-     *      path="/api/tags/create",
+     *      path="/api/admin/tags/create",
      *      description="Create multiple Tags",
      *      @OA\RequestBody(
      *          required=true,
@@ -116,7 +116,7 @@ interface TagsApiSwagger
      *     security={
      *         {"passport": {}},
      *     },
-     *     path="/api/tags",
+     *     path="/api/admin/tags",
      *     summary="Destroy Tags",
      *     description="Destroy Tags",
      *     @OA\RequestBody(
@@ -158,7 +158,7 @@ interface TagsApiSwagger
      *      security={
      *          {"passport": {}},
      *      },
-     *      path="/api/tags/{tag}",
+     *      path="/api/admin/tags/{tag}",
      *      description="Display the specified Tag",
      *      @OA\Parameter(
      *          name="tag",
