@@ -26,57 +26,6 @@
                         }
                     }
                 }
-            },
-            "delete": {
-                "tags": [
-                    "Tags"
-                ],
-                "summary": "Destroy Tags",
-                "description": "Destroy Tags",
-                "operationId": "677f2e1b048f2aaf6ac859c633b33af7",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "tags": {
-                                        "type": "array",
-                                        "items": {
-                                            "properties": {
-                                                "": {
-                                                    "type": "integer",
-                                                    "example": "1"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "content": {
-                            "application/json": {}
-                        }
-                    },
-                    "422": {
-                        "description": "Bad request",
-                        "content": {
-                            "application/json": {}
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "passport": []
-                    }
-                ]
             }
         },
         "/api/tags/unique": {
@@ -102,13 +51,13 @@
                 }
             }
         },
-        "/api/tags/create": {
+        "/api/admin/tags/create": {
             "post": {
                 "tags": [
                     "Tags"
                 ],
                 "description": "Create multiple Tags",
-                "operationId": "8dd1d58e5e85340c2825557114e7d90c",
+                "operationId": "f082a7f006adcb8c7982a77879ee9dd1",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -165,13 +114,66 @@
                 }
             }
         },
-        "/api/tags/{tag}": {
+        "/api/admin/tags": {
+            "delete": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Destroy Tags",
+                "description": "Destroy Tags",
+                "operationId": "b6eeda4a51a064e937339664464e4868",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "tags": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "422": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/tags/{tag}": {
             "get": {
                 "tags": [
                     "Tags"
                 ],
                 "description": "Display the specified Tag",
-                "operationId": "43dac8f9aef855ced9abe167f8ac077d",
+                "operationId": "09c1c7584c8f9fa722d64a7a7d6f58a2",
                 "parameters": [
                     {
                         "name": "tag",
