@@ -6,7 +6,7 @@
 [![downloads](https://img.shields.io/packagist/dt/escolalms/tags)](https://packagist.org/packages/escolalms/tags)
 [![downloads](https://img.shields.io/packagist/v/escolalms/tags)](https://packagist.org/packages/escolalms/tags)
 [![downloads](https://img.shields.io/packagist/l/escolalms/tags)](https://packagist.org/packages/escolalms/tags)
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/f235cc5ffdde4318a4a0/maintainability)](https://codeclimate.com/github/EscolaLMS/Tags/maintainability)
 
 
 ## Features
