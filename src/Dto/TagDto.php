@@ -27,7 +27,7 @@ class TagDto
 
     public function setModelName() : void
     {
-        $this->modelName = config("tag_model_map.{$this->modelType}", null);
+        $this->modelName = config("escolalms_tags.tag_model_map.{$this->modelType}", null);
     }
 
     /**

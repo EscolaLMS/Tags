@@ -2,11 +2,11 @@
 
 namespace EscolaLms\Tags\Tests\API;
 
+use Config;
 use EscolaLms\Courses\Models\Course;
 use EscolaLms\Tags\Models\Tag;
 use EscolaLms\Tags\Tests\TestCase;
 use EscolaLms\Tags\Database\Seeders\TagsPermissionSeeder;
-use Illuminate\Support\Collection;
 
 class TagsApiTest extends TestCase
 {
@@ -18,7 +18,7 @@ class TagsApiTest extends TestCase
         $this->user->guard_name = 'api';
         $this->user->assignRole('admin');
         $this->course = Course::findOrNew(1);
-        config(['tag_model_map.course' => Course::class]);
+        Config::set('escolalms_tags.tag_model_map.course', Course::class);
     }
 
     public function testTagsInsert() : void

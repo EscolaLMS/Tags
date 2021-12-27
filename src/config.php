@@ -1,6 +1,4 @@
 <?php
 return [
-    'morphable_classes' => [
-        'courses'
-    ]
+    'tag_model_map' => []
 ];
