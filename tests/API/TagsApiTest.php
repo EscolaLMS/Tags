@@ -23,14 +23,13 @@ class TagsApiTest extends TestCase
 
     public function testTagsInsert() : void
     {
-
         // Set value for test
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'course',
             'model_id' => $this->course->getKey(),
             'tags' => [
-                ['title' => 'test'],
-                ['title' => 'test2']
+                ['title' => 'xd'],
+                ['title' => 'xdd2']
             ]
         ]);
         $this->assertObjectHasAttribute('data', $response->getData());
@@ -41,20 +40,23 @@ class TagsApiTest extends TestCase
     public function testTagsIndex() : void
     {
         $response = $this->json('GET', '/api/tags');
-        $this->assertObjectHasAttribute('data', $response->getData());
-        $this->assertIsArray($response->getData()->data);
-        $this->assertObjectHasAttribute('title', $response->getData()->data[0]);
+        $response->assertOk();
     }
 
     public function testTagShow() : void
     {
+        $courseActive = Course::factory(['active' => true])->create();
+        $tagActiveCourse = Tag::factory([
+            'morphable_type' => Course::class,
+            'morphable_id' => $courseActive->getKey()
+        ])->create();
 
         // Set value for test
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'course',
             'model_id' => $this->course->getKey(),
             'tags' => [
-                ['title' => 'Bestseller']
+                ['title' => $tagActiveCourse->title]
             ]
         ]);
         $tags = $response->getData()->data;
