@@ -20,16 +20,16 @@ class TagsApiTest extends TestCase
         $this->user = config('auth.providers.users.model')::factory()->create();
         $this->user->guard_name = 'api';
         $this->user->assignRole('admin');
-        $this->course = Course::findOrNew(1);
         Config::set('escolalms_tags.tag_model_map.course', Course::class);
     }
 
     public function testTagsInsert() : void
     {
+        $course = Course::findOrNew(1);
         // Set value for test
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'course',
-            'model_id' => $this->course->getKey(),
+            'model_id' => $course->getKey(),
             'tags' => [
                 ['title' => 'test'],
                 ['title' => 'test2']
@@ -57,7 +57,7 @@ class TagsApiTest extends TestCase
         // Set value for test
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'course',
-            'model_id' => $this->course->getKey(),
+            'model_id' => $courseActive->getKey(),
             'tags' => [
                 ['title' => $tagActiveCourse->title]
             ]
@@ -71,9 +71,10 @@ class TagsApiTest extends TestCase
 
     public function testTagDestroy() : void
     {
+        $course = Course::findOrNew(1);
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'course',
-            'model_id' => $this->course->getKey(),
+            'model_id' => $course->getKey(),
             'tags' => [
                 ['title' => 'Bestseller'],
                 ['title' => 'Nowości'],
