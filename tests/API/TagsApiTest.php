@@ -25,7 +25,7 @@ class TagsApiTest extends TestCase
 
     public function testTagsInsert() : void
     {
-        $course = Course::findOrNew(1);
+        $course = Course::factory()->create();
         // Set value for test
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'course',
@@ -34,7 +34,9 @@ class TagsApiTest extends TestCase
                 ['title' => 'test'],
             ]
         ]);
-        $response->assertOk();
+        $this->assertObjectHasAttribute('data', $response->getData());
+        $this->assertIsArray($response->getData()->data);
+        $this->assertTrue($response->getData()->data[0]->title === 'test');
     }
 
     public function testTagsIndex() : void
@@ -68,7 +70,7 @@ class TagsApiTest extends TestCase
 
     public function testTagDestroy() : void
     {
-        $course = Course::findOrNew(1);
+        $course = Course::factory()->create();
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'course',
             'model_id' => $course->getKey(),
