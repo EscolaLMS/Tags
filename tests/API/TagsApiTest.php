@@ -7,9 +7,12 @@ use EscolaLms\Courses\Models\Course;
 use EscolaLms\Tags\Models\Tag;
 use EscolaLms\Tags\Tests\TestCase;
 use EscolaLms\Tags\Database\Seeders\TagsPermissionSeeder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TagsApiTest extends TestCase
 {
+    use DatabaseTransactions;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -28,8 +31,8 @@ class TagsApiTest extends TestCase
             'model_type' => 'course',
             'model_id' => $this->course->getKey(),
             'tags' => [
-                ['title' => 'xd'],
-                ['title' => 'xdd2']
+                ['title' => 'test'],
+                ['title' => 'test2']
             ]
         ]);
         $this->assertObjectHasAttribute('data', $response->getData());
