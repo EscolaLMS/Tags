@@ -105,4 +105,20 @@ class TagsAPIController extends EscolaLmsBaseController
             $this->sendResponse($tags, 'Tags unique fetched successfully') :
             $this->sendError('Tags not found', 404) ;
     }
+
+    public function uniqueAdmin(Request $request): JsonResponse
+    {
+        $tags = $this->tagRepository->unique();
+        return $tags ?
+            $this->sendResponse($tags, 'Tags unique fetched successfully') :
+            $this->sendError('Tags not found', 404) ;
+    }
+
+    public function uniqueTagsCourse(): JsonResponse
+    {
+        $tags = $this->tagRepository->uniqueTagsFromActiveCourses();
+        return $tags ?
+            $this->sendResponse($tags, 'Tags unique fetched successfully') :
+            $this->sendError('Tags not found', 404) ;
+    }
 }
