@@ -46,10 +46,9 @@ class TagsApiTest extends TestCase
 
     public function testTagShow() : void
     {
-        $courseActive = Course::factory(['active' => true])->create();
         $tagActiveCourse = Tag::factory([
-            'morphable_type' => Course::class,
-            'morphable_id' => $courseActive->getKey()
+            'morphable_type' => 'test',
+            'morphable_id' => 1
         ])->create();
 
         // Set value for test
@@ -69,7 +68,6 @@ class TagsApiTest extends TestCase
 
     public function testTagDestroy() : void
     {
-        $course = Course::factory()->create();
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'test',
             'model_id' => 1,
