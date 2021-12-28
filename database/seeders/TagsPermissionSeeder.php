@@ -4,7 +4,6 @@ namespace EscolaLms\Tags\Database\Seeders;
 
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-
 use Illuminate\Database\Seeder;
 
 class TagsPermissionSeeder extends Seeder
