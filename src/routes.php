@@ -12,6 +12,7 @@ Route::group(['prefix' => 'api/tags'], function () {
 Route::group(['prefix' => 'api/admin/tags'], function () {
     Route::post('/', [TagsAPIController::class, 'create']);
     Route::delete('/', [TagsAPIController::class, 'destroy']);
+    Route::get('unique', [TagsAPIController::class, 'uniqueAdmin']);
 
     Route::group(['middleware' => [\Illuminate\Routing\Middleware\SubstituteBindings::class]], function () {
         Route::get('{tag}', [TagsAPIController::class, 'show']);

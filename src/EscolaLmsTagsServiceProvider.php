@@ -3,6 +3,8 @@
 namespace EscolaLms\Tags;
 
 use EscolaLms\Core\Providers\Injectable;
+use EscolaLms\Settings\EscolaLmsSettingsServiceProvider;
+use EscolaLms\Settings\Facades\AdministrableConfig;
 use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
 use EscolaLms\Tags\Repository\TagRepository;
 use EscolaLms\Tags\Services\Contracts\TagServiceContract;
@@ -24,6 +26,10 @@ class EscolaLmsTagsServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__ . '/config.php', 'escolalms_tags');
+        if (!app()->bound(EscolaLmsSettingsServiceProvider::class)) {
+            $this->app->register(EscolaLmsSettingsServiceProvider::class);
+        }
         $this->app->register(\L5Swagger\L5SwaggerServiceProvider::class);
     }
 
@@ -32,6 +38,18 @@ class EscolaLmsTagsServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
         $this->loadMigrations();
         $this->app['router']->aliasMiddleware('role', RoleMiddleware::class);
+        if ($this->app->runningInConsole()) {
+            $this->bootForConsole();
+        }
+
+        AdministrableConfig::registerConfig('escolalms_tags.morphable_classes');
+    }
+
+    protected function bootForConsole()
+    {
+        $this->publishes([
+            __DIR__ . '/config.php' => config_path('escolalms_tags.php'),
+        ], 'escolalms_tags.config');
     }
 
 

@@ -5,9 +5,9 @@ namespace EscolaLms\Tags\Repository;
 
 
 use EscolaLms\Core\Repositories\BaseRepository;
-use EscolaLms\Tags\Dto\TagDto;
 use EscolaLms\Tags\Models\Tag;
 use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class TagRepository extends BaseRepository implements TagRepositoryContract
@@ -66,5 +66,13 @@ class TagRepository extends BaseRepository implements TagRepositoryContract
     public function unique(): Collection
     {
         return $this->model->select('title')->distinct('title')->get();
+    }
+
+    public function uniqueTagsFromActiveCourses(): ?Collection
+    {
+        return $this->model->select('title')
+            ->whereHas('morphable', function(Builder $query) {
+                $query->where('active', '=', true);
+            })->distinct('title')->get();
     }
 }

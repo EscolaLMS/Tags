@@ -27,4 +27,9 @@ interface TagRepositoryContract extends BaseRepositoryContract
      * @return Collection
      */
     public function unique(): Collection;
+
+    /**
+     * @return Collection|null
+     */
+    public function uniqueTagsFromActiveCourses(): ?Collection;
 }

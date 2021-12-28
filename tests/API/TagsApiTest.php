@@ -2,13 +2,17 @@
 
 namespace EscolaLms\Tags\Tests\API;
 
+use Config;
+use EscolaLms\Courses\Models\Course;
 use EscolaLms\Tags\Models\Tag;
 use EscolaLms\Tags\Tests\TestCase;
-use Illuminate\Support\Facades\Artisan;
 use EscolaLms\Tags\Database\Seeders\TagsPermissionSeeder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TagsApiTest extends TestCase
 {
+    use DatabaseTransactions;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -16,19 +20,17 @@ class TagsApiTest extends TestCase
         $this->user = config('auth.providers.users.model')::factory()->create();
         $this->user->guard_name = 'api';
         $this->user->assignRole('admin');
-        config(['tag_model_map.test' => 'Test']);
+        Config::set('escolalms_tags.tag_model_map.test', 'test');
     }
 
     public function testTagsInsert() : void
     {
-   
         // Set value for test
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'test',
             'model_id' => 1,
             'tags' => [
                 ['title' => 'test'],
-                ['title' => 'test2']
             ]
         ]);
         $this->assertObjectHasAttribute('data', $response->getData());
@@ -39,20 +41,22 @@ class TagsApiTest extends TestCase
     public function testTagsIndex() : void
     {
         $response = $this->json('GET', '/api/tags');
-        $this->assertObjectHasAttribute('data', $response->getData());
-        $this->assertIsArray($response->getData()->data);
-        $this->assertObjectHasAttribute('title', $response->getData()->data[0]);
+        $response->assertOk();
     }
 
     public function testTagShow() : void
     {
+        $tagActiveCourse = Tag::factory([
+            'morphable_type' => 'test',
+            'morphable_id' => 1
+        ])->create();
 
         // Set value for test
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'test',
             'model_id' => 1,
             'tags' => [
-                ['title' => 'Bestseller']
+                ['title' => $tagActiveCourse->title]
             ]
         ]);
         $tags = $response->getData()->data;
@@ -89,6 +93,21 @@ class TagsApiTest extends TestCase
     public function testTagsUnique() : void
     {
         $response = $this->json('GET', '/api/tags/unique');
+        $response->assertStatus(200);
+        $this->assertObjectHasAttribute('data', $response->getData());
+        $temp_array = $key_array = [];
+        foreach ($response->getData()->data as $key => $val) {
+            if (!in_array($val->title, $key_array)) {
+                $key_array[$key] = $val->title;
+                $temp_array[$key] = $val;
+            }
+        }
+        $this->assertTrue(count($temp_array) === count($response->getData()->data));
+    }
+
+    public function testTagsUniqueAdmin() : void
+    {
+        $response = $this->json('GET', '/api/admin/tags/unique');
         $response->assertStatus(200);
         $this->assertObjectHasAttribute('data', $response->getData());
         $temp_array = $key_array = [];
