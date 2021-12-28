@@ -20,16 +20,15 @@ class TagsApiTest extends TestCase
         $this->user = config('auth.providers.users.model')::factory()->create();
         $this->user->guard_name = 'api';
         $this->user->assignRole('admin');
-        Config::set('escolalms_tags.tag_model_map.course', Course::class);
+        Config::set('escolalms_tags.tag_model_map.test', 'test');
     }
 
     public function testTagsInsert() : void
     {
-        $course = Course::factory()->create();
         // Set value for test
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
-            'model_type' => 'course',
-            'model_id' => $course->getKey(),
+            'model_type' => 'test',
+            'model_id' => 1,
             'tags' => [
                 ['title' => 'test'],
             ]
@@ -55,8 +54,8 @@ class TagsApiTest extends TestCase
 
         // Set value for test
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
-            'model_type' => 'course',
-            'model_id' => $courseActive->getKey(),
+            'model_type' => 'test',
+            'model_id' => 1,
             'tags' => [
                 ['title' => $tagActiveCourse->title]
             ]
@@ -72,8 +71,8 @@ class TagsApiTest extends TestCase
     {
         $course = Course::factory()->create();
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
-            'model_type' => 'course',
-            'model_id' => $course->getKey(),
+            'model_type' => 'test',
+            'model_id' => 1,
             'tags' => [
                 ['title' => 'Bestseller'],
                 ['title' => 'Nowości'],
@@ -106,34 +105,6 @@ class TagsApiTest extends TestCase
             }
         }
         $this->assertTrue(count($temp_array) === count($response->getData()->data));
-    }
-
-    public function testUniqueTagsCourses() : void
-    {
-        $courseActive = Course::factory(['active' => true])->create();
-        $courseUnActive = Course::factory(['active' => false])->create();
-        $tagActiveCourse = Tag::factory([
-            'morphable_type' => Course::class,
-            'morphable_id' => $courseActive->getKey()
-        ])->create();
-        $tagUnActiveCourse = Tag::factory([
-            'morphable_type' => Course::class,
-            'morphable_id' => $courseUnActive->getKey()
-        ])->create();
-
-        $response = $this->json('GET', '/api/tags/uniqueTagsCourse');
-        $response->assertStatus(200);
-        $this->assertObjectHasAttribute('data', $response->getData());
-        $result = false;
-        foreach ($response->getData()->data as $tag) {
-            if ($tag->title === $tagActiveCourse->title) {
-                $result = true;
-            }
-            if ($tag->title === $tagUnActiveCourse->title) {
-                $result = false;
-            }
-        }
-        $this->assertTrue($result);
     }
 
     public function testTagsUniqueAdmin() : void
