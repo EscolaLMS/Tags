@@ -1,10 +1,9 @@
 <?php
 
-
 namespace EscolaLms\Tags\Policies;
 
-
 use EscolaLms\Core\Models\User;
+use EscolaLms\Tags\Enums\TagsPermissionsEnum;
 use EscolaLms\Tags\Models\Tag;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -12,14 +11,13 @@ class TagPolicy
 {
     use HandlesAuthorization;
 
-
     /**
      * @param User $user
      * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
-        return $user->can('create tags');
+        return $user->can(TagsPermissionsEnum::TAGS_CREATE);
     }
 
     /**
@@ -27,8 +25,8 @@ class TagPolicy
      * @param Tag $tag
      * @return bool
      */
-    public function delete(User $user)
+    public function delete(User $user): bool
     {
-        return $user->can('delete tags');
+        return $user->can(TagsPermissionsEnum::TAGS_DELETE);
     }
 }
