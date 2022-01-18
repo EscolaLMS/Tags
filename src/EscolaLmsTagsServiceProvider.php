@@ -58,8 +58,6 @@ class EscolaLmsTagsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../database/migrations' => database_path('migrations')
         ], 'escolalms');
-
-
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
 }

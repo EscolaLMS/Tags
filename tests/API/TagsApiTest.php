@@ -68,15 +68,20 @@ class TagsApiTest extends TestCase
 
     public function testTagDestroy() : void
     {
+        $tag1 = Tag::factory([
+            'morphable_type' => 'test',
+            'morphable_id' => 1
+        ])->create();
+        $tag2 = Tag::factory([
+            'morphable_type' => 'test',
+            'morphable_id' => 1
+        ])->create();
         $response = $this->actingAs($this->user, 'api')->json('POST', '/api/admin/tags', [
             'model_type' => 'test',
             'model_id' => 1,
             'tags' => [
-                ['title' => 'Bestseller'],
-                ['title' => 'Nowości'],
-                ['title' => 'Promocje'],
-                ['title' => 'Najlepsze hity'],
-                ['title' => 'Na czasie']
+                ['title' => $tag1->title],
+                ['title' => $tag2->title]
             ]
         ]);
         $response->assertStatus(200);
