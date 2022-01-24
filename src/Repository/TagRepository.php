@@ -5,6 +5,7 @@ namespace EscolaLms\Tags\Repository;
 
 
 use EscolaLms\Core\Repositories\BaseRepository;
+use EscolaLms\Courses\Enum\CourseStatusEnum;
 use EscolaLms\Tags\Models\Tag;
 use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
 use Illuminate\Database\Eloquent\Builder;
@@ -72,7 +73,7 @@ class TagRepository extends BaseRepository implements TagRepositoryContract
     {
         return $this->model->select('title')
             ->whereHas('morphable', function(Builder $query) {
-                $query->where('active', '=', true);
+                $query->where('status', '=', CourseStatusEnum::PUBLISHED);
             })->distinct('title')->get();
     }
 }
