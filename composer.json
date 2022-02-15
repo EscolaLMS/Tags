@@ -6,7 +6,6 @@
     "php": "^7.4|^8.0",
     "laravel/framework": "^8.0",
     "escolalms/core": "^1",
-    "darkaonline/l5-swagger": "^8.0",
     "escolalms/settings": "^0"
   },
   "require-dev": {
