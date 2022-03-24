@@ -2,7 +2,6 @@
 
 namespace EscolaLms\Tags;
 
-use EscolaLms\Core\Providers\Injectable;
 use EscolaLms\Settings\EscolaLmsSettingsServiceProvider;
 use EscolaLms\Settings\Facades\AdministrableConfig;
 use EscolaLms\Tags\Repository\Contracts\TagRepositoryContract;
@@ -17,8 +16,6 @@ use Spatie\Permission\Middlewares\RoleMiddleware;
  */
 class EscolaLmsTagsServiceProvider extends ServiceProvider
 {
-    use Injectable;
-
     public $singletons = [
         TagRepositoryContract::class => TagRepository::class,
         TagServiceContract::class => TagService::class
