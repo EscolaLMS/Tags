@@ -1,4 +1,5 @@
 # Tags
+Package have a tags morphable relations
 
 [![swagger](https://img.shields.io/badge/documentation-swagger-green)](https://escolalms.github.io/Tags/)
 [![codecov](https://codecov.io/gh/EscolaLMS/Tags/branch/main/graph/badge.svg?token=ci4VPQbrOI)](https://codecov.io/gh/EscolaLMS/Tags)
@@ -9,44 +10,37 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/f235cc5ffdde4318a4a0/maintainability)](https://codeclimate.com/github/EscolaLMS/Tags/maintainability)
 
 
-## Features
+## What does it do
 
-The lib allows tags
+This package have a tags which you can add to models in EscolaLms.
 
 - adding tags to each module
 - edit and create multiple tags
 
-See [Swagger](https://escolalms.github.io/Tags/) documented endpoints.
+## Installing
 
-Some [tests](tests) can also be a great point of start.
+- `composer require escolalms/tags`
+- `php artisan migrate`
+- `php artisan db:seed --class="EscolaLms\Tags\Database\Seeders\TagsPermissionSeeder"`
 
-To play the content you can use [EscolaLMS Tags](https://github.com/EscolaLMS/Tags)
+## Endpoints
 
-## Install
+All the endpoints are defined in [![swagger][![swagger](https://img.shields.io/badge/documentation-swagger-green)](https://escolalms.github.io/Tags/)
 
-1. `composer require escolalms/tags`
-2. `php artisan migrate`
+## Tests
 
-### Cors
+Run `./vendor/bin/phpunit --filter=Tags` to run tests. See [tests](tests) folder as it's quite good staring point as documentation appendix.
 
-All the endpoints need to be accesible from other domains, so [CORS](https://laravel.com/docs/8.x/routing#cors) must be properlly set.
+Test details [![codecov](https://codecov.io/gh/EscolaLMS/Tags/branch/main/graph/badge.svg?token=ci4VPQbrOI)](https://codecov.io/gh/EscolaLMS/Tags) [![phpunit](https://github.com/EscolaLMS/Tags/actions/workflows/test.yml/badge.svg)](https://github.com/EscolaLMS/Tags/actions/workflows/test.yml)
 
-Except of endpoints assets must expose CORS headers as well. You achive that by setting Apache/Nginx/Caddy/Whatever settings - below is example for Nginx for wildcard global access.
+## Permissions
 
+Permissions are defined in [seeder](vendor/escolalms/tags/database/seeders/TagsPermissionSeeder.php)
+
+## Database relation
+
+1. `Morphable` Tags is related morphable with other models
 ```
-location ~* \.(eot|ttf|woff|woff2|jpg|jpeg|gif|png|wav|mp3|mp4|mov|ogg|webv)$ {
-    add_header Access-Control-Allow-Origin *;
-}
+Tags n -> n Other models
 ```
 
-### Seeder
-You can seed library and content with build-in seeders that are accessible with
-
-- `php artisan tag-permissions:seed` to add permissions
-
-## Road map
-
-- caching
-- casading delete
-- sql foreign keys indexing
-- clearup task - deleting temp files, marked for delete 
