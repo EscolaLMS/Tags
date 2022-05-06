@@ -1,5 +1,5 @@
 # Tags
-Package have a tags morphable relations
+Package Tagging for any Module
 
 [![swagger](https://img.shields.io/badge/documentation-swagger-green)](https://escolalms.github.io/Tags/)
 [![codecov](https://codecov.io/gh/EscolaLMS/Tags/branch/main/graph/badge.svg?token=ci4VPQbrOI)](https://codecov.io/gh/EscolaLMS/Tags)
