@@ -39,6 +39,7 @@ class EscolaLmsTagsServiceProvider extends ServiceProvider
         }
 
         AdministrableConfig::registerConfig('escolalms_tags.morphable_classes');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'tags');
     }
 
     protected function bootForConsole()
