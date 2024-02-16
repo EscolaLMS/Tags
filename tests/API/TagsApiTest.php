@@ -2,12 +2,11 @@
 
 namespace EscolaLms\Tags\Tests\API;
 
-use Config;
-use EscolaLms\Courses\Models\Course;
 use EscolaLms\Tags\Models\Tag;
 use EscolaLms\Tags\Tests\TestCase;
 use EscolaLms\Tags\Database\Seeders\TagsPermissionSeeder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Config;
 
 class TagsApiTest extends TestCase
 {
@@ -32,10 +31,12 @@ class TagsApiTest extends TestCase
             'tags' => [
                 ['title' => 'test'],
             ]
-        ]);
-        $this->assertObjectHasAttribute('data', $response->getData());
-        $this->assertIsArray($response->getData()->data);
-        $this->assertTrue($response->getData()->data[0]->title === 'test');
+        ])
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonFragment([
+                'title' => 'test',
+            ]);
     }
 
     public function testTagsIndex() : void
@@ -61,9 +62,9 @@ class TagsApiTest extends TestCase
         ]);
         $tags = $response->getData()->data;
         $response = $this->json('GET', '/api/admin/tags/' . $tags[0]->id);
-        $this->assertObjectHasAttribute('data', $response->getData());
+        $response->assertOk();
         $this->assertIsObject($response->getData()->data);
-        $this->assertTrue($response->getData()->data->id === $tags[0]->id);
+        $response->assertJsonPath('data.id', $tags[0]->id);
     }
 
     public function testTagDestroy() : void
@@ -97,9 +98,9 @@ class TagsApiTest extends TestCase
 
     public function testTagsUnique() : void
     {
-        $response = $this->json('GET', '/api/tags/unique');
-        $response->assertStatus(200);
-        $this->assertObjectHasAttribute('data', $response->getData());
+        $response = $this->json('GET', '/api/tags/unique')
+            ->assertOk();
+
         $temp_array = $key_array = [];
         foreach ($response->getData()->data as $key => $val) {
             if (!in_array($val->title, $key_array)) {
@@ -112,9 +113,9 @@ class TagsApiTest extends TestCase
 
     public function testTagsUniqueAdmin() : void
     {
-        $response = $this->json('GET', '/api/admin/tags/unique');
-        $response->assertStatus(200);
-        $this->assertObjectHasAttribute('data', $response->getData());
+        $response = $this->json('GET', '/api/admin/tags/unique')
+            ->assertOk();
+
         $temp_array = $key_array = [];
         foreach ($response->getData()->data as $key => $val) {
             if (!in_array($val->title, $key_array)) {
