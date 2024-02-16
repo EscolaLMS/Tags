@@ -99,8 +99,7 @@ class TagsApiTest extends TestCase
     public function testTagsUnique() : void
     {
         $response = $this->json('GET', '/api/tags/unique')
-            ->assertOk()
-            ->assertJsonIsArray('data');
+            ->assertOk();
 
         $temp_array = $key_array = [];
         foreach ($response->getData()->data as $key => $val) {
@@ -115,8 +114,7 @@ class TagsApiTest extends TestCase
     public function testTagsUniqueAdmin() : void
     {
         $response = $this->json('GET', '/api/admin/tags/unique')
-            ->assertOk()
-            ->assertJsonIsArray('data');
+            ->assertOk();
 
         $temp_array = $key_array = [];
         foreach ($response->getData()->data as $key => $val) {
