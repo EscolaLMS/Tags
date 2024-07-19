@@ -22,7 +22,6 @@ class TagPolicy
 
     /**
      * @param User $user
-     * @param Tag $tag
      * @return bool
      */
     public function delete(User $user): bool

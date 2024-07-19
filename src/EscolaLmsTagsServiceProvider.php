@@ -16,12 +16,15 @@ use Spatie\Permission\Middlewares\RoleMiddleware;
  */
 class EscolaLmsTagsServiceProvider extends ServiceProvider
 {
-    public $singletons = [
+    /**
+     * @var array<class-string, class-string>
+     */
+    public array $singletons = [
         TagRepositoryContract::class => TagRepository::class,
         TagServiceContract::class => TagService::class
     ];
 
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/config.php', 'escolalms_tags');
         if (!app()->bound(EscolaLmsSettingsServiceProvider::class)) {
@@ -29,10 +32,11 @@ class EscolaLmsTagsServiceProvider extends ServiceProvider
         }
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
         $this->loadMigrations();
+        // @phpstan-ignore-next-line
         $this->app['router']->aliasMiddleware('role', RoleMiddleware::class);
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
@@ -42,7 +46,7 @@ class EscolaLmsTagsServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'tags');
     }
 
-    protected function bootForConsole()
+    protected function bootForConsole(): void
     {
         $this->publishes([
             __DIR__ . '/config.php' => config_path('escolalms_tags.php'),

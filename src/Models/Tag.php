@@ -4,6 +4,7 @@ namespace EscolaLms\Tags\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class Tag
@@ -31,7 +32,7 @@ class Tag extends Model
     /**
      * The attributes that should be casted to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'id' => 'integer',
@@ -43,7 +44,7 @@ class Tag extends Model
     /**
      * Validation rules
      *
-     * @var array
+     * @var array<string, string>
      */
     public static $rules = [
         'title' => 'nullable|string|max:255',
@@ -57,7 +58,7 @@ class Tag extends Model
     /**
      * Get the owning commentable model.
      */
-    public function morphable()
+    public function morphable(): MorphTo
     {
         return $this->morphTo();
     }

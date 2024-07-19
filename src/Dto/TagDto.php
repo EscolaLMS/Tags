@@ -38,12 +38,12 @@ class TagDto
         return $this->modelName;
     }
 
-    public function getTags()
+    public function getTags(): array
     {
         return $this->tags;
     }
 
-    public function getModelId()
+    public function getModelId(): int
     {
         return $this->modelId;
     }

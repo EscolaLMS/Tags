@@ -47,7 +47,9 @@ class TagRepository extends BaseRepository implements TagRepositoryContract
      */
     public function insert(array $tagData) : Tag
     {
-        return $this->model->create($tagData);
+        /** @var Tag $model */
+        $model = $this->model->create($tagData);
+        return $model;
     }
 
     /**
@@ -73,7 +75,9 @@ class TagRepository extends BaseRepository implements TagRepositoryContract
     public function uniqueTagsFromActiveCourses(): ?Collection
     {
         return $this->model->select('title')
+            // @phpstan-ignore-next-line
             ->whereHasMorph('morphable', Course::class, function(Builder $query) {
+                // @phpstan-ignore-next-line
                 $query->where('status', '=', CourseStatusEnum::PUBLISHED);
             })
             ->distinct('title')

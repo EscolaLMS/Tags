@@ -12,7 +12,7 @@ class TagInsertRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return auth()->user()->can('create', Tag::class);
     }
@@ -20,9 +20,9 @@ class TagInsertRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'model_type' => 'required|string',
