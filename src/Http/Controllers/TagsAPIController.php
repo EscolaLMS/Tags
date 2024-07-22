@@ -69,14 +69,11 @@ class TagsAPIController extends EscolaLmsBaseController
      * Display the specified Tag.
      * GET|HEAD /tags/{tag}
      *
-     * @param $id
      * @return JsonResponse
      */
     public function show(Tag $tag, Request $request): JsonResponse
     {
-        return empty($tag) ?
-            $this->sendError('Tag not found', 404) :
-            $this->sendResponse($tag, 'Tag fetched successfully');
+        return $this->sendResponse($tag, 'Tag fetched successfully');
     }
 
     /**
@@ -101,16 +98,12 @@ class TagsAPIController extends EscolaLmsBaseController
     public function unique(Request $request): JsonResponse
     {
         $tags = $this->tagRepository->unique();
-        return $tags ?
-            $this->sendResponse($tags, 'Tags unique fetched successfully') :
-            $this->sendError('Tags not found', 404) ;
+        return $this->sendResponse($tags, 'Tags unique fetched successfully');
     }
 
     public function uniqueAdmin(Request $request): JsonResponse
     {
         $tags = $this->tagRepository->unique();
-        return $tags ?
-            $this->sendResponse($tags, 'Tags unique fetched successfully') :
-            $this->sendError('Tags not found', 404) ;
+        return $this->sendResponse($tags, 'Tags unique fetched successfully');
     }
 }

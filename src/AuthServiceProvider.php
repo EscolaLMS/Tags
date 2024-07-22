@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
         Tag::class => TagPolicy::class,
     ];
 
-    public function boot()
+    public function boot(): void
     {
         $this->registerPolicies();
 
