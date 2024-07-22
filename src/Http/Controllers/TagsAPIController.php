@@ -98,16 +98,12 @@ class TagsAPIController extends EscolaLmsBaseController
     public function unique(Request $request): JsonResponse
     {
         $tags = $this->tagRepository->unique();
-        return $tags->count() > 0 ?
-            $this->sendResponse($tags, 'Tags unique fetched successfully') :
-            $this->sendError('Tags not found', 404) ;
+        return $this->sendResponse($tags, 'Tags unique fetched successfully');
     }
 
     public function uniqueAdmin(Request $request): JsonResponse
     {
         $tags = $this->tagRepository->unique();
-        return $tags->count() > 0 ?
-            $this->sendResponse($tags, 'Tags unique fetched successfully') :
-            $this->sendError('Tags not found', 404) ;
+        return $this->sendResponse($tags, 'Tags unique fetched successfully');
     }
 }
