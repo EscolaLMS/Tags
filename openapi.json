@@ -205,5 +205,11 @@
                 ]
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Tags",
+            "description": "Tags"
+        }
+    ]
 }
